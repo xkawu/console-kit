@@ -1,10 +1,12 @@
 import * as fs from "fs";
+import * as readline from "readline";
 import chalk from "chalk";
 import dayjs from "dayjs";
 
 const colors = {
     blue: "#2D77E8",
     green: "#33D361",
+    yellow: "#E9D71D",
     red: "#E23B3B",
     grey: "#4D4D4D",
 };
@@ -12,14 +14,14 @@ const colors = {
 interface ProgressBar {
     percentage: number;
     message: string;
-    timestamp: boolean | null;
+    timestamp: boolean;
 }
 
 export class ConsoleKit {
     private _loaderInterval: ReturnType<typeof setInterval> | null = null;
     private _currentProgress: ProgressBar | null = null;
 
-    comment(message: string, timestamp: boolean | null = null) {
+    comment(message: string, timestamp: boolean = false) {
         const icon = "#";
         const timeText = dayjs(new Date(Date.now())).format(
             "HH:mm:ss DD/MM/YYYY"
@@ -32,7 +34,7 @@ export class ConsoleKit {
         );
     }
 
-    info(message: string, timestamp: boolean | null = null) {
+    info(message: string, timestamp: boolean = false) {
         const icon = "i";
         const timeText = dayjs(new Date(Date.now())).format(
             "HH:mm:ss DD/MM/YYYY"
@@ -45,7 +47,20 @@ export class ConsoleKit {
         );
     }
 
-    check(message: string, timestamp: boolean | null = null) {
+    warn(message: string, timestamp: boolean = false) {
+        const icon = "!";
+        const timeText = dayjs(new Date(Date.now())).format(
+            "HH:mm:ss DD/MM/YYYY"
+        );
+
+        console.log(
+            `${chalk.hex(colors.yellow)(icon)}  ${message}${
+                timestamp ? ` ❚ ${timeText}` : ""
+            }`
+        );
+    }
+
+    check(message: string, timestamp: boolean = false) {
         const icon = "✓";
         const timeText = dayjs(new Date(Date.now())).format(
             "HH:mm:ss DD/MM/YYYY"
@@ -58,7 +73,7 @@ export class ConsoleKit {
         );
     }
 
-    x(message: string, timestamp: boolean | null = null) {
+    x(message: string, timestamp: boolean = false) {
         const icon = "✕";
         const timeText = dayjs(new Date(Date.now())).format(
             "HH:mm:ss DD/MM/YYYY"
@@ -71,7 +86,7 @@ export class ConsoleKit {
         );
     }
 
-    startLoading(message: string, timestamp: boolean | null = null) {
+    startLoading(message: string, timestamp: boolean = false) {
         if (this._loaderInterval) {
             this.x(
                 "A loader is already running. Stop it before wanting to start another one."
@@ -98,7 +113,7 @@ export class ConsoleKit {
         this._loaderInterval = loader;
     }
 
-    stopLoading(clearLine: boolean | null = null) {
+    stopLoading(clearLine: boolean = false) {
         if (this._loaderInterval) {
             clearInterval(this._loaderInterval);
             this._loaderInterval = null;
@@ -119,7 +134,7 @@ export class ConsoleKit {
     startProgress(
         message: string,
         percentage: number = 0,
-        timestamp: boolean | null = null
+        timestamp: boolean = false
     ) {
         if (this._currentProgress) {
             this.x(
@@ -192,7 +207,7 @@ export class ConsoleKit {
         );
     }
 
-    endProgress(clearLine: boolean | null = null) {
+    endProgress(clearLine: boolean = false) {
         if (!this._currentProgress) {
             this.x("There is not progress bar running.");
 
@@ -213,16 +228,22 @@ export class ConsoleKit {
         }
     }
 
-    prompt(message: string) {
-        const prompt = (msg: string) => {
-            fs.writeSync(1, String(msg));
-            let s = "",
-                buf = Buffer.alloc(1);
-            while (buf[0] - 10 && buf[0] - 13)
-                (s += buf), fs.readSync(0, buf, 0, 1, 0);
-            return s.slice(1);
-        };
+    async prompt(message: string) {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+        });
 
-        return prompt(`${chalk.hex(colors.grey)(">")}  ${message}`);
+        const answer = await new Promise((resolveOuter) => {
+            rl.question(
+                `${chalk.hex(colors.grey)(">")}  ${message}`,
+                function (answer) {
+                    resolveOuter(answer);
+                    rl.close();
+                }
+            );
+        });
+
+        return await answer;
     }
 }
