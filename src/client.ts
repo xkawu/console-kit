@@ -166,7 +166,7 @@ export class ConsoleKit {
         );
     }
 
-    editProgress(percentage: number) {
+    editProgress(percentage: number, message: string | undefined = undefined) {
         if (!this._currentProgress) {
             this.x("There is not progress bar running.");
 
@@ -190,6 +190,10 @@ export class ConsoleKit {
         );
 
         this._currentProgress.percentage = percentage;
+
+        if (message) {
+            this._currentProgress.message = message;
+        }
 
         const numOfDots = 20;
         let dots = ".".repeat(this._currentProgress.percentage / 5);

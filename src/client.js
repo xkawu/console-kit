@@ -99,7 +99,7 @@ class ConsoleKit {
         let empty = " ".repeat(numOfDots - this._currentProgress.percentage / 5);
         process.stdout.write(`[${chalk_1.default.hex(colors.blue)(`${dots}${empty}`)}] ${chalk_1.default.bold(`${this._currentProgress.percentage}%`)} ~ ${message}${timestamp ? ` ❚ ${timeText}` : ""}`);
     }
-    editProgress(percentage) {
+    editProgress(percentage, message = undefined) {
         if (!this._currentProgress) {
             this.x("There is not progress bar running.");
             process.exit();
@@ -114,6 +114,9 @@ class ConsoleKit {
         }
         const timeText = (0, dayjs_1.default)(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
         this._currentProgress.percentage = percentage;
+        if (message) {
+            this._currentProgress.message = message;
+        }
         const numOfDots = 20;
         let dots = ".".repeat(this._currentProgress.percentage / 5);
         let empty = " ".repeat(numOfDots - this._currentProgress.percentage / 5);
