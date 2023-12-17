@@ -6,7 +6,7 @@
     "devDependencies": {
         "@types/node": "^20.10.4"
     },
-    "version": "0.0.8",
+    "version": "0.0.9",
     "name": "@kawu/console-kit",
     "description": "A `fast`, `light weight`, `minimalist` and `reliable` module to log stuff easly and more understable.",
     "main": "./src/client.js",
