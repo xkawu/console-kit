@@ -163,7 +163,7 @@ export class ConsoleKit {
 
     editProgress(percentage: number, message: string | undefined = undefined) {
         if (!this._currentProgress) {
-            this.x("There is not progress bar running.");
+            this.x("There is no progress bar running.");
 
             process.exit();
         }
@@ -207,7 +207,7 @@ export class ConsoleKit {
 
     endProgress(clearLine: boolean = false) {
         if (!this._currentProgress) {
-            this.x("There is not progress bar running.");
+            this.x("There is no progress bar running.");
 
             process.exit();
         }
