@@ -7,7 +7,7 @@
         "@types/node": "^20.10.4"
     },
     "version": "0.0.1",
-    "name": "console-kit",
+    "name": "@kawu/console-kit",
     "description": "A `fast`, `light weight`, `minimalist` and `reliable` module to log stuff easly and more understable.",
     "main": "/src/client.ts",
     "scripts": {
