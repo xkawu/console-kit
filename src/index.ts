@@ -23,7 +23,7 @@ const consoleKit = new ConsoleKit();
     consoleKit.startProgress("Progress Bar with timestamp", 25, true);
     consoleKit.endProgress();
 
-    const answer = await consoleKit.prompt("This is a prompt : ");
+    const answer = await consoleKit.prompt("This is a prompt");
     consoleKit.comment(`Answer is ${answer}`);
 
     consoleKit.startLoading("This is a loader...");

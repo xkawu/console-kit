@@ -235,7 +235,9 @@ export class ConsoleKit {
 
         const answer = await new Promise((resolveOuter) => {
             rl.question(
-                `${chalk.hex(colors.grey)(">")}  ${message}`,
+                `${chalk.hex(colors.blue)("?")}  ${message} ${chalk.hex(
+                    colors.grey
+                )(">")} `,
                 function (answer) {
                     resolveOuter(answer);
                     rl.close();
