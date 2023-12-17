@@ -10,17 +10,11 @@ const colors = {
     grey: "#4D4D4D",
 };
 
-interface ProgressBar {
-    percentage: number;
-    message: string;
-    timestamp: boolean;
-}
-
 export class ConsoleKit {
-    private _loaderInterval: ReturnType<typeof setInterval> | null = null;
-    private _currentProgress: ProgressBar | null = null;
+    _loaderInterval = null;
+    _currentProgress = null;
 
-    comment(message: string, timestamp: boolean = false) {
+    comment(message, timestamp = false) {
         const icon = "#";
         const timeText = dayjs(new Date(Date.now())).format(
             "HH:mm:ss DD/MM/YYYY"
@@ -33,7 +27,7 @@ export class ConsoleKit {
         );
     }
 
-    info(message: string, timestamp: boolean = false) {
+    info(message, timestamp = false) {
         const icon = "i";
         const timeText = dayjs(new Date(Date.now())).format(
             "HH:mm:ss DD/MM/YYYY"
@@ -46,7 +40,7 @@ export class ConsoleKit {
         );
     }
 
-    warn(message: string, timestamp: boolean = false) {
+    warn(message, timestamp = false) {
         const icon = "!";
         const timeText = dayjs(new Date(Date.now())).format(
             "HH:mm:ss DD/MM/YYYY"
@@ -59,7 +53,7 @@ export class ConsoleKit {
         );
     }
 
-    check(message: string, timestamp: boolean = false) {
+    check(message, timestamp = false) {
         const icon = "✓";
         const timeText = dayjs(new Date(Date.now())).format(
             "HH:mm:ss DD/MM/YYYY"
@@ -72,7 +66,7 @@ export class ConsoleKit {
         );
     }
 
-    x(message: string, timestamp: boolean = false) {
+    x(message, timestamp = false) {
         const icon = "✕";
         const timeText = dayjs(new Date(Date.now())).format(
             "HH:mm:ss DD/MM/YYYY"
@@ -85,7 +79,7 @@ export class ConsoleKit {
         );
     }
 
-    startLoading(message: string, timestamp: boolean = false) {
+    startLoading(message, timestamp = false) {
         if (this._loaderInterval) {
             this.x(
                 "A loader is already running. Stop it before wanting to start another one."
@@ -112,7 +106,7 @@ export class ConsoleKit {
         this._loaderInterval = loader;
     }
 
-    stopLoading(clearLine: boolean = false) {
+    stopLoading(clearLine = false) {
         if (this._loaderInterval) {
             clearInterval(this._loaderInterval);
             this._loaderInterval = null;
@@ -130,11 +124,7 @@ export class ConsoleKit {
         }
     }
 
-    startProgress(
-        message: string,
-        percentage: number = 0,
-        timestamp: boolean = false
-    ) {
+    startProgress(message, percentage = 0, timestamp = false) {
         if (this._currentProgress) {
             this.x(
                 "A progress bar is already running. Stop it before wanting to start another one."
@@ -166,7 +156,7 @@ export class ConsoleKit {
         );
     }
 
-    editProgress(percentage: number) {
+    editProgress(percentage) {
         if (!this._currentProgress) {
             this.x("There is not progress bar running.");
 
@@ -206,7 +196,7 @@ export class ConsoleKit {
         );
     }
 
-    endProgress(clearLine: boolean = false) {
+    endProgress(clearLine = false) {
         if (!this._currentProgress) {
             this.x("There is not progress bar running.");
 
@@ -227,7 +217,7 @@ export class ConsoleKit {
         }
     }
 
-    async prompt(message: string) {
+    async prompt(message) {
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout,
