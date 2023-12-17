@@ -112,10 +112,15 @@ export class ConsoleKit {
         this._loaderInterval = loader;
     }
 
-    stopLoading() {
+    stopLoading(clearLine: boolean = false) {
         if (this._loaderInterval) {
             clearInterval(this._loaderInterval);
             this._loaderInterval = null;
+
+            if (clearLine) {
+                process.stdout.clearLine(0);
+                process.stdout.cursorTo(0);
+            }
         } else {
             this.x(
                 "No loader has been started. Please start a loader before wanting to stop one."

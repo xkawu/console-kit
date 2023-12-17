@@ -101,7 +101,7 @@ class ConsoleKit {
     }
     editProgress(percentage, message = undefined) {
         if (!this._currentProgress) {
-            this.x("There is not progress bar running.");
+            this.x("There is no progress bar running.");
             process.exit();
         }
         if (percentage > 100) {
@@ -124,7 +124,7 @@ class ConsoleKit {
     }
     endProgress(clearLine = false) {
         if (!this._currentProgress) {
-            this.x("There is not progress bar running.");
+            this.x("There is no progress bar running.");
             process.exit();
         }
         const timeText = (0, dayjs_1.default)(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
