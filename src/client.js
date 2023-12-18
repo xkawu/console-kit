@@ -57,8 +57,7 @@ class ConsoleKit {
     }
     startLoading(message, timestamp = false) {
         if (this._loaderInterval) {
-            this.x("A loader is already running. Stop it before wanting to start another one.");
-            process.exit();
+            throw new Error("a loading is already running");
         }
         const timeText = (0, dayjs_1.default)(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
         const P = ["\\", "|", "/", "-"];
@@ -79,14 +78,12 @@ class ConsoleKit {
             }
         }
         else {
-            this.x("No loader has been started. Please start a loader before wanting to stop one.");
-            process.exit();
+            throw new Error("no loading running");
         }
     }
     startProgress(message, percentage = 0, timestamp = false) {
         if (this._currentProgress) {
-            this.x("A progress bar is already running. Stop it before wanting to start another one.");
-            process.exit();
+            throw new Error("a progress bar is already running");
         }
         const timeText = (0, dayjs_1.default)(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
         this._currentProgress = {
@@ -101,16 +98,13 @@ class ConsoleKit {
     }
     editProgress(percentage, message = undefined) {
         if (!this._currentProgress) {
-            this.x("There is no progress bar running.");
-            process.exit();
+            throw new Error("no progress bar running");
         }
         if (percentage > 100) {
-            this.x("You cannot go above 100%.");
-            process.exit();
+            throw new Error("progress bar percentage cannot go above 100");
         }
         if (percentage < 0) {
-            this.x("You cannot go below 0%.");
-            process.exit();
+            throw new Error("progress bar percentage cannot go below 0");
         }
         const timeText = (0, dayjs_1.default)(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
         this._currentProgress.percentage = percentage;
@@ -124,10 +118,8 @@ class ConsoleKit {
     }
     endProgress(clearLine = false) {
         if (!this._currentProgress) {
-            this.x("There is no progress bar running.");
-            process.exit();
+            throw new Error("no progress bar running");
         }
-        const timeText = (0, dayjs_1.default)(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
         this._currentProgress = null;
         if (clearLine) {
             process.stdout.clearLine(0);
@@ -150,6 +142,29 @@ class ConsoleKit {
                 });
             });
             return yield answer;
+        });
+    }
+    yesno(message, defaultValue) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const rl = readline_1.default.createInterface({
+                input: process.stdin,
+                output: process.stdout,
+            });
+            const answer = yield new Promise((resolveOuter) => {
+                rl.question(`[${chalk_1.default.hex(colors.green)("Y")}/${chalk_1.default.hex(colors.red)("N")}  ${message} ${chalk_1.default.hex(colors.grey)(">")} `, function (answer) {
+                    resolveOuter(answer);
+                    rl.close();
+                });
+            });
+            let result = defaultValue;
+            if (answer.toLowerCase() === "y" || answer.toLowerCase() === "yes") {
+                result = true;
+            }
+            else if (answer.toLowerCase() === "n" ||
+                answer.toLowerCase() === "no") {
+                result = false;
+            }
+            return result;
         });
     }
 }

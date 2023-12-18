@@ -87,11 +87,7 @@ export class ConsoleKit {
 
     startLoading(message: string, timestamp: boolean = false) {
         if (this._loaderInterval) {
-            this.x(
-                "A loader is already running. Stop it before wanting to start another one."
-            );
-
-            process.exit();
+            throw new Error("a loading is already running");
         }
 
         const timeText = dayjs(new Date(Date.now())).format(
@@ -122,11 +118,7 @@ export class ConsoleKit {
                 process.stdout.cursorTo(0);
             }
         } else {
-            this.x(
-                "No loader has been started. Please start a loader before wanting to stop one."
-            );
-
-            process.exit();
+            throw new Error("no loading running");
         }
     }
 
@@ -136,11 +128,7 @@ export class ConsoleKit {
         timestamp: boolean = false
     ) {
         if (this._currentProgress) {
-            this.x(
-                "A progress bar is already running. Stop it before wanting to start another one."
-            );
-
-            process.exit();
+            throw new Error("a progress bar is already running");
         }
 
         const timeText = dayjs(new Date(Date.now())).format(
@@ -168,21 +156,15 @@ export class ConsoleKit {
 
     editProgress(percentage: number, message: string | undefined = undefined) {
         if (!this._currentProgress) {
-            this.x("There is no progress bar running.");
-
-            process.exit();
+            throw new Error("no progress bar running");
         }
 
         if (percentage > 100) {
-            this.x("You cannot go above 100%.");
-
-            process.exit();
+            throw new Error("progress bar percentage cannot go above 100");
         }
 
         if (percentage < 0) {
-            this.x("You cannot go below 0%.");
-
-            process.exit();
+            throw new Error("progress bar percentage cannot go below 0");
         }
 
         const timeText = dayjs(new Date(Date.now())).format(
@@ -212,17 +194,10 @@ export class ConsoleKit {
 
     endProgress(clearLine: boolean = false) {
         if (!this._currentProgress) {
-            this.x("There is no progress bar running.");
-
-            process.exit();
+            throw new Error("no progress bar running");
         }
 
-        const timeText = dayjs(new Date(Date.now())).format(
-            "HH:mm:ss DD/MM/YYYY"
-        );
-
         this._currentProgress = null;
-
         if (clearLine) {
             process.stdout.clearLine(0);
             process.stdout.cursorTo(0);
@@ -237,7 +212,7 @@ export class ConsoleKit {
             output: process.stdout,
         });
 
-        const answer = await new Promise((resolveOuter) => {
+        const answer: string = await new Promise((resolveOuter) => {
             rl.question(
                 `${chalk.hex(colors.blue)("?")}  ${message} ${chalk.hex(
                     colors.grey
@@ -250,5 +225,36 @@ export class ConsoleKit {
         });
 
         return await answer;
+    }
+
+    async yesno(message: string, defaultValue: boolean) {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+        });
+
+        const answer: string = await new Promise((resolveOuter) => {
+            rl.question(
+                `[${chalk.hex(colors.green)("Y")}/${chalk.hex(colors.red)(
+                    "N"
+                )}  ${message} ${chalk.hex(colors.grey)(">")} `,
+                function (answer) {
+                    resolveOuter(answer);
+                    rl.close();
+                }
+            );
+        });
+
+        let result: boolean = defaultValue;
+        if (answer.toLowerCase() === "y" || answer.toLowerCase() === "yes") {
+            result = true;
+        } else if (
+            answer.toLowerCase() === "n" ||
+            answer.toLowerCase() === "no"
+        ) {
+            result = false;
+        }
+
+        return result;
     }
 }
