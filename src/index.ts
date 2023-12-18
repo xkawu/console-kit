@@ -26,5 +26,7 @@ const consoleKit = new ConsoleKit();
     const answer = await consoleKit.prompt("This is a prompt");
     consoleKit.comment(`Answer is ${answer}`);
 
+    const a = await consoleKit.yesno("aaaaa", false);
+
     consoleKit.startLoading("This is a loader...");
 })();

@@ -224,7 +224,7 @@ export class ConsoleKit {
             );
         });
 
-        return await answer;
+        return answer;
     }
 
     async yesno(message: string, defaultValue: boolean) {
@@ -235,9 +235,13 @@ export class ConsoleKit {
 
         const answer: string = await new Promise((resolveOuter) => {
             rl.question(
-                `[${chalk.hex(colors.green)("Y")}/${chalk.hex(colors.red)(
-                    "N"
-                )}  ${message} ${chalk.hex(colors.grey)(">")} `,
+                `${chalk.hex(colors.grey)("[")}${
+                    defaultValue ? chalk.hex(colors.green)("Y") : "Y"
+                }${chalk.hex(colors.grey)("/")}${
+                    defaultValue ? "N" : chalk.hex(colors.red)("N")
+                }${chalk.hex(colors.grey)("]")}  ${message} ${chalk.hex(
+                    colors.grey
+                )(">")} `,
                 function (answer) {
                     resolveOuter(answer);
                     rl.close();

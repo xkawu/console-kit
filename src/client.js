@@ -141,7 +141,7 @@ class ConsoleKit {
                     rl.close();
                 });
             });
-            return yield answer;
+            return answer;
         });
     }
     yesno(message, defaultValue) {
@@ -151,7 +151,7 @@ class ConsoleKit {
                 output: process.stdout,
             });
             const answer = yield new Promise((resolveOuter) => {
-                rl.question(`[${chalk_1.default.hex(colors.green)("Y")}/${chalk_1.default.hex(colors.red)("N")}  ${message} ${chalk_1.default.hex(colors.grey)(">")} `, function (answer) {
+                rl.question(`${chalk_1.default.hex(colors.grey)("[")}${defaultValue ? chalk_1.default.hex(colors.green)("Y") : "Y"}${chalk_1.default.hex(colors.grey)("/")}${defaultValue ? "N" : chalk_1.default.hex(colors.red)("N")}${chalk_1.default.hex(colors.grey)("]")}  ${message} ${chalk_1.default.hex(colors.grey)(">")} `, function (answer) {
                     resolveOuter(answer);
                     rl.close();
                 });
