@@ -16,6 +16,7 @@ exports.ConsoleKit = void 0;
 const readline_1 = __importDefault(require("readline"));
 const chalk_1 = __importDefault(require("chalk"));
 const dayjs_1 = __importDefault(require("dayjs"));
+const cliSelect = require("cli-select");
 const colors = {
     blue: "#2D77E8",
     green: "#33D361",
@@ -129,14 +130,14 @@ class ConsoleKit {
             process.stdout.write("\n");
         }
     }
-    prompt(message) {
+    prompt(message, character) {
         return __awaiter(this, void 0, void 0, function* () {
             const rl = readline_1.default.createInterface({
                 input: process.stdin,
                 output: process.stdout,
             });
             const answer = yield new Promise((resolveOuter) => {
-                rl.question(`${chalk_1.default.hex(colors.blue)("?")}  ${message} ${chalk_1.default.hex(colors.grey)(">")} `, function (answer) {
+                rl.question(`${chalk_1.default.hex(colors.blue)(character ? character : "?")}  ${message} ${chalk_1.default.hex(colors.grey)(">")} `, function (answer) {
                     resolveOuter(answer);
                     rl.close();
                 });
@@ -165,6 +166,21 @@ class ConsoleKit {
                 result = false;
             }
             return result;
+        });
+    }
+    select(selectOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                const options = {
+                    values: selectOptions.values,
+                    defaultValue: selectOptions.defaultValueIndex || 0,
+                    selected: selectOptions.selectedText ||
+                        `[ ${chalk_1.default.hex(colors.blue)("•")} ]`,
+                    unselected: selectOptions.selectedText || `[   ]`,
+                    cleanup: selectOptions.cleanafter || true,
+                };
+                cliSelect(options).then(resolve).catch(reject);
+            });
         });
     }
 }

@@ -3,6 +3,11 @@ import { ConsoleKit } from "./client";
 const consoleKit = new ConsoleKit();
 
 (async () => {
+    console.log(
+        await consoleKit.select({
+            values: ["this", "is", "a", "selection"],
+        })
+    );
     consoleKit.comment("Comment without timestamp");
     consoleKit.check("Check without timestamp");
     consoleKit.info("Info without timestamp");

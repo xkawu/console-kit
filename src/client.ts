@@ -1,6 +1,7 @@
 import readline from "readline";
 import chalk from "chalk";
 import dayjs from "dayjs";
+const cliSelect = require("cli-select");
 
 const colors = {
     blue: "#2D77E8",
@@ -14,6 +15,14 @@ interface ProgressBar {
     percentage: number;
     message: string;
     timestamp: boolean;
+}
+
+interface SelectOptions {
+    values: Array<string>;
+    defaultValueIndex?: number;
+    selectedText?: string;
+    unselectedText?: string;
+    cleanafter?: boolean;
 }
 
 export class ConsoleKit {
@@ -206,7 +215,7 @@ export class ConsoleKit {
         }
     }
 
-    async prompt(message: string) {
+    async prompt(message: string, character?: string) {
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout,
@@ -214,9 +223,9 @@ export class ConsoleKit {
 
         const answer: string = await new Promise((resolveOuter) => {
             rl.question(
-                `${chalk.hex(colors.blue)("?")}  ${message} ${chalk.hex(
-                    colors.grey
-                )(">")} `,
+                `${chalk.hex(colors.blue)(
+                    character ? character : "?"
+                )}  ${message} ${chalk.hex(colors.grey)(">")} `,
                 function (answer) {
                     resolveOuter(answer);
                     rl.close();
@@ -260,5 +269,21 @@ export class ConsoleKit {
         }
 
         return result;
+    }
+
+    async select(selectOptions: SelectOptions) {
+        return new Promise((resolve, reject) => {
+            const options = {
+                values: selectOptions.values,
+                defaultValue: selectOptions.defaultValueIndex || 0,
+                selected:
+                    selectOptions.selectedText ||
+                    `[ ${chalk.hex(colors.blue)("•")} ]`,
+                unselected: selectOptions.selectedText || `[   ]`,
+                cleanup: selectOptions.cleanafter || true,
+            };
+
+            cliSelect(options).then(resolve).catch(reject);
+        });
     }
 }
