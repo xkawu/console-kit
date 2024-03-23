@@ -44,7 +44,7 @@ consoleKit.comment(CommentOptions);
 // CommentOptions
 
 message: string;
-timestamp: boolean; // not required
+timestamp: boolean; // Not required
 ```
 
 ### Check (success)
@@ -57,7 +57,7 @@ consoleKit.check(CheckOptions);
 // CheckOptions
 
 message: string;
-timestamp: boolean; // not required
+timestamp: boolean; // Not required
 ```
 
 ### Info
@@ -70,7 +70,7 @@ consoleKit.info(InfoOptions);
 // InfoOptions
 
 message: string;
-timestamp: boolean; // not required
+timestamp: boolean; // Not required
 ```
 
 ### Warn
@@ -83,7 +83,7 @@ consoleKit.warn(WarnOptions);
 // WarnOptions
 
 message: string;
-timestamp: boolean; // not required
+timestamp: boolean; // Not required
 ```
 
 ### X (error)
@@ -96,7 +96,7 @@ consoleKit.x(ErrorOptions);
 // ErrorOptions
 
 message: string;
-timestamp: boolean; // not required
+timestamp: boolean; // Not required
 ```
 
 ## Loading
@@ -115,7 +115,7 @@ consoleKit.startLoading(StartLoaderOptions);
 // StartLoaderOptions
 
 message: string;
-timestamp: boolean; // not required
+timestamp: boolean; // Not required
 ```
 
 ### Stop loader
@@ -190,8 +190,8 @@ consoleKit.prompt(PromptOptions);
 ```ts
 // PromptOptions
 
-message: string
-character?: string // Not required -- If you wish to replace "?", put your own icon here
+message: string;
+character: string; // Not required -- If you wish to replace "?", put your own icon here
 ```
 
 ### Output
