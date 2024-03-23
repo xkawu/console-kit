@@ -163,7 +163,7 @@ export class ConsoleKit {
         );
     }
 
-    editProgress(percentage: number, message: string | undefined = undefined) {
+    editProgress(percentage: number, message: string) {
         if (!this._currentProgress) {
             throw new Error("no progress bar running");
         }
