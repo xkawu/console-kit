@@ -1,2 +1,5 @@
 node_modules
 todo.txt
+
+/src/client.js
+/src/index.js
