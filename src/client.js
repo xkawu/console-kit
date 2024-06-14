@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ConsoleKit = void 0;
+exports.underline = exports.italic = exports.bold = exports.ConsoleKit = void 0;
 const readline_1 = __importDefault(require("readline"));
 const chalk_1 = __importDefault(require("chalk"));
 const dayjs_1 = __importDefault(require("dayjs"));
-const cliSelect = require("cli-select");
+const cli_select_1 = __importDefault(require("cli-select"));
 const colors = {
     blue: "#2D77E8",
     green: "#33D361",
@@ -24,11 +24,11 @@ const colors = {
     red: "#E23B3B",
     grey: "#4D4D4D",
 };
+// Logger
 class ConsoleKit {
     constructor() {
         this._loaderInterval = null;
         this._currentProgress = null;
-        this.chalk = chalk_1.default;
     }
     comment(message, timestamp = false) {
         const icon = "#";
@@ -180,9 +180,14 @@ class ConsoleKit {
                     unselected: selectOptions.selectedText || `[   ]`,
                     cleanup: selectOptions.cleanafter || true,
                 };
-                cliSelect(options).then(resolve).catch(reject);
+                (0, cli_select_1.default)(options).then(resolve).catch(reject);
             });
         });
     }
 }
 exports.ConsoleKit = ConsoleKit;
+// Styling
+var chalk_2 = require("chalk");
+Object.defineProperty(exports, "bold", { enumerable: true, get: function () { return chalk_2.bold; } });
+Object.defineProperty(exports, "italic", { enumerable: true, get: function () { return chalk_2.italic; } });
+Object.defineProperty(exports, "underline", { enumerable: true, get: function () { return chalk_2.underline; } });

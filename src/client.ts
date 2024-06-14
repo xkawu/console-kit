@@ -1,7 +1,7 @@
 import readline from "readline";
 import chalk, { Chalk } from "chalk";
 import dayjs from "dayjs";
-const cliSelect = require("cli-select");
+import cliSelect from "cli-select";
 
 const colors = {
     blue: "#2D77E8",
@@ -25,11 +25,10 @@ interface SelectOptions {
     cleanafter?: boolean;
 }
 
+// Logger
 export class ConsoleKit {
     private _loaderInterval: ReturnType<typeof setInterval> | null = null;
     private _currentProgress: ProgressBar | null = null;
-
-    public chalk: Chalk = chalk;
 
     comment(message: string, timestamp: boolean = false) {
         const icon = "#";
@@ -289,3 +288,6 @@ export class ConsoleKit {
         });
     }
 }
+
+// Styling
+export { bold, italic, underline } from "chalk";
