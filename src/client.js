@@ -162,8 +162,7 @@ class ConsoleKit {
             if (answer.toLowerCase() === "y" || answer.toLowerCase() === "yes") {
                 result = true;
             }
-            else if (answer.toLowerCase() === "n" ||
-                answer.toLowerCase() === "no") {
+            else if (answer.toLowerCase() === "n" || answer.toLowerCase() === "no") {
                 result = false;
             }
             return result;
@@ -175,8 +174,7 @@ class ConsoleKit {
                 const options = {
                     values: selectOptions.values,
                     defaultValue: selectOptions.defaultValueIndex || 0,
-                    selected: selectOptions.selectedText ||
-                        `[ ${chalk_1.default.hex(colors.blue)("•")} ]`,
+                    selected: selectOptions.selectedText || `[ ${chalk_1.default.hex(colors.blue)("•")} ]`,
                     unselected: selectOptions.selectedText || `[   ]`,
                     cleanup: selectOptions.cleanafter || true,
                 };
