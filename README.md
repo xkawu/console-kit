@@ -47,10 +47,10 @@ message: string;
 timestamp: boolean; // Not required
 ```
 
-### Check (success)
+### Success
 
 ```js
-consoleKit.check(CheckOptions);
+consoleKit.success(CheckOptions);
 ```
 
 ```ts
@@ -86,10 +86,10 @@ message: string;
 timestamp: boolean; // Not required
 ```
 
-### X (error)
+### Error
 
 ```js
-consoleKit.x(ErrorOptions);
+consoleKit.error(ErrorOptions);
 ```
 
 ```ts
