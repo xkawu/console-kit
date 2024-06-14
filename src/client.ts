@@ -1,5 +1,5 @@
 import readline from "readline";
-import chalk from "chalk";
+import chalk, { Chalk } from "chalk";
 import dayjs from "dayjs";
 const cliSelect = require("cli-select");
 
@@ -28,6 +28,8 @@ interface SelectOptions {
 export class ConsoleKit {
     private _loaderInterval: ReturnType<typeof setInterval> | null = null;
     private _currentProgress: ProgressBar | null = null;
+
+    public chalk: Chalk = chalk;
 
     comment(message: string, timestamp: boolean = false) {
         const icon = "#";
