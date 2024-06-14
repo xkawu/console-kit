@@ -63,7 +63,7 @@ export class ConsoleKit {
     );
   }
 
-  check(message: string, timestamp: boolean = false) {
+  success(message: string, timestamp: boolean = false) {
     const icon = "✓";
     const timeText = dayjs(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
 
@@ -74,7 +74,7 @@ export class ConsoleKit {
     );
   }
 
-  x(message: string, timestamp: boolean = false) {
+  error(message: string, timestamp: boolean = false) {
     const icon = "✕";
     const timeText = dayjs(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
 

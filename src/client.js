@@ -47,12 +47,12 @@ class ConsoleKit {
         const timeText = (0, dayjs_1.default)(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
         console.log(`${chalk_1.default.hex(colors.yellow)(icon)}  ${message}${timestamp ? ` ❚ ${timeText}` : ""}`);
     }
-    check(message, timestamp = false) {
+    success(message, timestamp = false) {
         const icon = "✓";
         const timeText = (0, dayjs_1.default)(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
         console.log(`${chalk_1.default.hex(colors.green)(icon)}  ${message}${timestamp ? ` ❚ ${timeText}` : ""}`);
     }
-    x(message, timestamp = false) {
+    error(message, timestamp = false) {
         const icon = "✕";
         const timeText = (0, dayjs_1.default)(new Date(Date.now())).format("HH:mm:ss DD/MM/YYYY");
         console.log(`${chalk_1.default.hex(colors.red)(icon)}  ${message}${timestamp ? ` ❚ ${timeText}` : ""}`);
