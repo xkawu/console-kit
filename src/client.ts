@@ -2,6 +2,7 @@ import readline from "readline";
 import chalk, { Chalk } from "chalk";
 import dayjs from "dayjs";
 import cliSelect from "cli-select";
+import { EventEmitter } from "node:events";
 
 const colors = {
   blue: "#2D77E8",
@@ -263,6 +264,34 @@ export class ConsoleKit {
       cliSelect(options).then(resolve).catch(reject);
     });
   }
+}
+
+// Debugger
+export class Debugger extends EventEmitter {
+  constructor() {
+    super();
+  }
+}
+
+interface DebuggerEventsTypo {
+  name: string;
+  args: string[];
+}
+
+interface DebuggerEvents {
+  debug: (message: string) => void;
+}
+
+export declare interface Debugger {
+  on<U extends keyof DebuggerEvents>(
+    event: U,
+    listener: DebuggerEvents[U]
+  ): this;
+
+  emit<U extends keyof DebuggerEvents>(
+    event: U,
+    ...args: Parameters<DebuggerEvents[U]>
+  ): boolean;
 }
 
 // Styling
