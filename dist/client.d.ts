@@ -1,6 +1,11 @@
 /// <reference types="node" />
 import { EventEmitter } from "node:events";
-interface SelectOptions {
+export interface ProgressBar {
+    percentage: number;
+    message: string;
+    timestamp: boolean;
+}
+export interface SelectOptions {
     values: Array<string>;
     defaultValueIndex?: number;
     selectedText?: string;

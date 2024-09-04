@@ -12,13 +12,13 @@ const colors = {
   grey: "#4D4D4D",
 };
 
-interface ProgressBar {
+export interface ProgressBar {
   percentage: number;
   message: string;
   timestamp: boolean;
 }
 
-interface SelectOptions {
+export interface SelectOptions {
   values: Array<string>;
   defaultValueIndex?: number;
   selectedText?: string;
@@ -271,11 +271,6 @@ export class Debugger extends EventEmitter {
   constructor() {
     super();
   }
-}
-
-interface DebuggerEventsTypo {
-  name: string;
-  args: string[];
 }
 
 interface DebuggerEvents {
