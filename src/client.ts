@@ -19,6 +19,7 @@ export interface ProgressBar {
 }
 
 export interface SelectOptions {
+  id?: number;
   values: Array<string>;
   defaultValueIndex?: number;
   selectedText?: string;

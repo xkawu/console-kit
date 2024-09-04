@@ -6,6 +6,7 @@ export interface ProgressBar {
     timestamp: boolean;
 }
 export interface SelectOptions {
+    id?: number;
     values: Array<string>;
     defaultValueIndex?: number;
     selectedText?: string;
